@@ -10,11 +10,13 @@ import { links } from '../data/site.js';
   <section class="section book-hero">
     <div class="wrap book-hero-grid">
       <div class="cover-col reveal">
-        <div class="book-spine">
-          <span class="book-kicker">A book by Avi Barlatier</span>
-          <span class="book-name">The Human Side of Animal Research</span>
-          <span class="book-sub">Leadership Over Management for a Culture of Care</span>
-        </div>
+        <img
+          src="/img/book-cover.jpg"
+          alt="Book cover: The Human Side of Animal Research — Leadership Over Management for a Culture of Care, by Avi Barlatier"
+          class="book-img"
+          width="400"
+          height="600"
+        />
       </div>
       <div class="intro-col">
         <p class="eyebrow">The book</p>
@@ -63,14 +65,10 @@ import { links } from '../data/site.js';
   .book-hero { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
   .book-hero-grid { display: grid; gap: 2.5rem; align-items: center; }
   .cover-col { display: grid; place-items: center; }
-  .book-spine {
-    aspect-ratio: 2/3; width: min(300px, 75vw); background: linear-gradient(155deg, var(--ink), var(--ink-soft));
-    border-radius: 3px; box-shadow: 0 36px 70px -28px rgba(22,32,46,0.65); padding: 2.4rem 2rem;
-    display: flex; flex-direction: column; gap: 0.9rem; border-left: 6px solid var(--brass);
+  .book-img {
+    width: min(300px, 75vw); aspect-ratio: 2/3; object-fit: cover;
+    border-radius: 4px; box-shadow: 0 36px 70px -28px rgba(22,32,46,0.65);
   }
-  .book-kicker { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); font-weight: 700; }
-  .book-name { font-family: var(--display); font-size: 1.7rem; color: var(--paper); line-height: 1.1; margin-top: auto; }
-  .book-sub { font-family: var(--display); font-style: italic; font-size: 1rem; color: color-mix(in srgb, var(--paper) 78%, transparent); }
   .book-h1 { font-size: var(--step-3); }
   .book-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.5rem; }
   @media (min-width: 820px) { .book-hero-grid { grid-template-columns: 0.9fr 1.1fr; gap: 4rem; } }

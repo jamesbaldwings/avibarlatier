@@ -129,12 +129,17 @@ const themes = [
 
   <section class="section book-feature">
     <div class="wrap book-grid">
-      <div class="book-cover reveal" aria-hidden="true">
-        <div class="book-spine">
-          <span class="book-kicker">The book</span>
-          <span class="book-name">The Human Side of Animal Research</span>
-          <span class="book-sub">Leadership Over Management for a Culture of Care</span>
-        </div>
+      <div class="book-cover reveal">
+        <a href="/book/" aria-label="The Human Side of Animal Research — read about the book">
+          <img
+            src="/img/book-cover.jpg"
+            alt="Book cover: The Human Side of Animal Research — Leadership Over Management for a Culture of Care"
+            class="book-img"
+            width="380"
+            height="570"
+            loading="lazy"
+          />
+        </a>
       </div>
       <div class="book-body reveal">
         <p class="eyebrow">Go deeper</p>
@@ -195,14 +200,12 @@ const themes = [
 
   .book-grid { display: grid; gap: 2.5rem; align-items: center; }
   .book-cover { display: grid; place-items: center; }
-  .book-spine {
-    aspect-ratio: 2/3; width: min(260px, 70vw); background: linear-gradient(155deg, var(--ink), var(--ink-soft));
-    border-radius: 3px; box-shadow: 0 30px 60px -25px rgba(22,32,46,0.6); padding: 2rem 1.6rem;
-    display: flex; flex-direction: column; gap: 0.8rem; border-left: 5px solid var(--brass);
+  .book-img {
+    width: min(260px, 70vw); aspect-ratio: 2/3; object-fit: cover;
+    border-radius: 4px; box-shadow: 0 30px 60px -25px rgba(22,32,46,0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .book-kicker { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); font-weight: 700; }
-  .book-name { font-family: var(--display); font-size: 1.5rem; color: var(--paper); line-height: 1.1; margin-top: auto; }
-  .book-sub { font-family: var(--display); font-style: italic; font-size: 0.95rem; color: color-mix(in srgb, var(--paper) 75%, transparent); }
+  .book-cover a:hover .book-img { transform: translateY(-4px); box-shadow: 0 36px 70px -28px rgba(22,32,46,0.7); }
   .book-body h2 { font-size: var(--step-2); }
   @media (min-width: 820px) { .book-grid { grid-template-columns: 0.8fr 1.2fr; gap: 4rem; } }
 </style>

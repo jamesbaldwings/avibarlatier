@@ -15,6 +15,9 @@ import SubscribeCTA from '../components/SubscribeCTA.astro';
 
   <section class="section">
     <div class="wrap prose">
+      <figure class="author-portrait">
+        <img src="/img/avi-author.jpg" alt="Avi Barlatier" width="320" height="320" loading="lazy" />
+      </figure>
       <p>Most leadership advice is written by people who studied leadership. Mine comes from doing it, for twenty years, in some of the most demanding and least forgiving environments there are.</p>
 
       <p>I came up through veterinary technology and laboratory animal care, and moved into leadership in a division of animal care at a major academic medical institution. These are workplaces governed by compliance, safety, and oversight, where a single mistake carries real weight, and where the people doing the work carry an emotional load most jobs never ask for. Leading well there isn't optional. It's the difference between a team that endures and a team that burns out.</p>
@@ -40,4 +43,12 @@ import SubscribeCTA from '../components/SubscribeCTA.astro';
   .prose { max-width: 68ch; }
   .prose h2 { font-size: var(--step-2); margin-top: 2.5rem; }
   .prose p { font-size: var(--step-0); }
+  .author-portrait { margin: 0 0 1.2rem; }
+  .author-portrait img {
+    width: 100%; max-width: 320px; aspect-ratio: 1; object-fit: cover;
+    border-radius: var(--radius); box-shadow: 0 22px 50px -26px rgba(22,32,46,0.5);
+  }
+  @media (min-width: 720px) {
+    .author-portrait { float: right; width: 280px; margin: 0.3rem 0 1.2rem 2rem; shape-outside: margin-box; }
+  }
 </style>
