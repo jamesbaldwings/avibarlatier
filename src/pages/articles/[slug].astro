@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import SubscribeCTA from '../../components/SubscribeCTA.astro';
+import { getCollection, render } from 'astro:content';
+export async function getStaticPaths() {
+  const posts = (await getCollection('articles')).filter((p)=>!p.data.draft);
+  return posts.map((p)=>({ params:{ slug:p.id }, props:{ post:p } }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+<Base title={post.data.title} description={post.data.description}>
+  <article class="section">
+    <div class="wrap article-head">
+      <p class="eyebrow">{post.data.category}</p>
+      <h1>{post.data.title}</h1>
+      <time class="muted">{post.data.date.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</time>
+    </div>
+    <div class="wrap article-body"><Content /></div>
+  </article>
+  <SubscribeCTA variant="auto" />
+</Base>
+<style>
+  .article-head { max-width: 720px; }
+  .article-head h1 { font-size: var(--step-3); margin: 0.5rem 0; }
+  .article-body { max-width: 680px; margin-top: 2rem; }
+  .article-body :global(p) { font-size: var(--step-0); }
+  .article-body :global(h2) { font-size: var(--step-2); margin-top: 2rem; }
+</style>

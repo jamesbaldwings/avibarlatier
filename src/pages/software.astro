@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { getCollection } from 'astro:content';
+import { links } from '../data/site.js';
+const projects = (await getCollection('projects')).sort((a,b)=>a.data.order-b.data.order);
+const statusColor = { active:'#2f7d4f', MVP:'#c0883f', prototype:'#7a6cc0', concept:'#5a636e', archived:'#9aa3ad' };
+---
+<Base title="Software" description="Software Avi Barlatier has designed and built, from research instruments to compliance platforms, all aimed at making people more capable.">
+  <PageHeader eyebrow="Software" title="I build the tools I wish existed."
+    lede="A selection of what I've designed and shipped. The thread running through all of it: technology that makes people more capable, not more replaceable." />
+  <section class="section"><div class="wrap">
+    <div class="proj-grid">
+      {projects.map((p)=>(
+        <article class="proj reveal">
+          <div class="proj-top">
+            <h2>{p.data.name}</h2>
+            <span class="status" style={`--c:${statusColor[p.data.status]}`}>{p.data.status}</span>
+          </div>
+          <p class="proj-sum">{p.data.summary}</p>
+          <p class="proj-prob muted"><strong>Solves:</strong> {p.data.problem}</p>
+          <ul class="tech">{p.data.tech.map((t)=><li>{t}</li>)}</ul>
+          <div class="proj-links">
+            {p.data.demo && <a href={p.data.demo} target="_blank" rel="noopener">Live &rarr;</a>}
+            {p.data.github && <a href={p.data.github} target="_blank" rel="noopener">GitHub &rarr;</a>}
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="more-note muted">More projects, including earlier and experimental work, live on <a href={links.github} target="_blank" rel="noopener">GitHub</a>.</p>
+  </div></section>
+</Base>
+<style>
+  .proj-grid { display: grid; gap: 1.4rem; grid-template-columns: 1fr; }
+  .proj { padding: 1.6rem; background: var(--paper-pure); border: 1px solid var(--cream-line); border-radius: var(--radius); display: flex; flex-direction: column; }
+  .proj-top { display: flex; justify-content: space-between; align-items: start; gap: 1rem; }
+  .proj-top h2 { font-size: var(--step-1); margin: 0; }
+  .status { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c); border: 1px solid var(--c); padding: 0.2rem 0.5rem; border-radius: 100px; white-space: nowrap; }
+  .proj-sum { margin: 0.7rem 0 0.6rem; }
+  .proj-prob { font-size: 0.88rem; margin: 0 0 1rem; }
+  .tech { list-style: none; padding: 0; margin: 0 0 1.2rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tech li { font-size: 0.75rem; background: var(--paper); border: 1px solid var(--cream-line); padding: 0.25rem 0.6rem; border-radius: 3px; color: var(--charcoal-soft); }
+  .proj-links { margin-top: auto; display: flex; gap: 1.2rem; font-weight: 600; font-size: 0.9rem; }
+  .proj-links a { text-decoration: none; }
+  .more-note { margin-top: 2rem; }
+  @media (min-width: 680px) { .proj-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (min-width: 1000px) { .proj-grid { grid-template-columns: repeat(3,1fr); } }
+</style>

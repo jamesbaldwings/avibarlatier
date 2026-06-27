@@ -1,0 +1,41 @@
+---
+const { title, description, category, youtubeId, flagship = false } = Astro.props;
+const hasVideo = youtubeId && youtubeId.length > 0;
+---
+<article class:list={['vcard', { flagship }]}>
+  <div class="vcard-thumb">
+    {hasVideo ? (
+      <a href={`https://youtube.com/watch?v=${youtubeId}`} target="_blank" rel="noopener" aria-label={`Watch: ${title}`}>
+        <img src={`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`} alt="" loading="lazy" width="480" height="360" />
+        <span class="play" aria-hidden="true">▶</span>
+      </a>
+    ) : (
+      <div class="vcard-soon" aria-hidden="true">
+        <span class="soon-mark">▶</span>
+        <span class="soon-label">Coming soon</span>
+      </div>
+    )}
+  </div>
+  <div class="vcard-body">
+    <span class="vcard-cat">{category}</span>
+    <h3 class="vcard-title">{title}</h3>
+    <p class="vcard-desc muted">{description}</p>
+  </div>
+</article>
+
+<style>
+  .vcard { display: flex; flex-direction: column; background: var(--paper-pure); border: 1px solid var(--cream-line); border-radius: var(--radius); overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .vcard:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -22px rgba(22,32,46,0.4); }
+  .vcard-thumb { aspect-ratio: 16/9; background: var(--ink); position: relative; overflow: hidden; }
+  .vcard-thumb a { display: block; height: 100%; }
+  .vcard-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .play { position: absolute; inset: 0; margin: auto; width: 3.2rem; height: 3.2rem; display: grid; place-content: center; background: color-mix(in srgb, var(--ink) 80%, transparent); color: var(--paper); border-radius: 50%; font-size: 1.1rem; padding-left: 4px; }
+  .vcard-soon { height: 100%; display: grid; place-content: center; gap: 0.5rem; justify-items: center; color: color-mix(in srgb, var(--paper) 55%, transparent); background: repeating-linear-gradient(135deg, var(--ink), var(--ink) 12px, var(--ink-soft) 12px, var(--ink-soft) 24px); }
+  .soon-mark { font-size: 1.4rem; opacity: 0.5; }
+  .soon-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
+  .vcard-body { padding: 1.2rem 1.3rem 1.4rem; }
+  .vcard-cat { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass-deep); }
+  .vcard-title { font-size: var(--step-1); margin: 0.4rem 0 0.5rem; line-height: 1.15; }
+  .vcard-desc { font-size: 0.92rem; margin: 0; }
+  .flagship { border-color: var(--brass); border-width: 1.5px; }
+</style>

@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+const themes = ['Cybersecurity','AI governance','Human-centered AI','Secure software development','AI in regulated environments','Healthcare and research technology','Organizational risk and technology adoption'];
+---
+<Base title="Research" description="Avi Barlatier's research focuses on cybersecurity, AI governance, and human-centered technology in regulated environments, as part of his Ph.D. in cybersecurity.">
+  <PageHeader eyebrow="Research" title="How do we adopt powerful technology without losing the human?"
+    lede="My doctoral work in cybersecurity sits where security, AI governance, and real organizations meet, especially the regulated, high-stakes ones where the cost of getting it wrong is highest." />
+  <section class="section"><div class="wrap">
+    <h2>Research interests</h2>
+    <ul class="themes">{themes.map((t)=><li>{t}</li>)}</ul>
+    <div class="focus">
+      <h2>Current focus</h2>
+      <p>Ph.D. in Cybersecurity, National University. My work examines how organizations in regulated, risk-averse environments adopt AI and secure software responsibly, the governance, the human factors, and the leadership it actually takes.</p>
+      <p class="muted">Publications and conference talks will be listed here as they develop.</p>
+    </div>
+  </div></section>
+</Base>
+<style>
+  .themes { list-style: none; padding: 0; margin: 1rem 0 2.5rem; display: grid; gap: 0.7rem; grid-template-columns: 1fr; }
+  .themes li { padding: 0.9rem 1.1rem; background: var(--paper-pure); border: 1px solid var(--cream-line); border-left: 3px solid var(--brass); border-radius: var(--radius); }
+  @media (min-width: 700px) { .themes { grid-template-columns: repeat(2,1fr); } }
+  .focus h2 { font-size: var(--step-2); }
+</style>

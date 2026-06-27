@@ -1,0 +1,58 @@
+---
+import { nav, secondaryNav, links, site } from '../data/site.js';
+const year = new Date().getFullYear();
+const social = [
+  links.youtube && { label: 'YouTube', href: links.youtube },
+  links.github && { label: 'GitHub', href: links.github },
+  links.linkedin && { label: 'LinkedIn', href: links.linkedin },
+  links.email && { label: 'Email', href: `mailto:${links.email}` },
+].filter(Boolean);
+---
+<footer class="ftr">
+  <div class="wrap ftr-grid">
+    <div class="ftr-brand">
+      <span class="ftr-mark">Avi Barlatier</span>
+      <p class="ftr-thesis">Technology should make people more capable, not more replaceable.</p>
+      <div class="ftr-social">
+        {social.map((s) => <a href={s.href} class="ftr-social-link">{s.label}</a>)}
+      </div>
+    </div>
+
+    <nav class="ftr-col" aria-label="Main">
+      <span class="ftr-head">Start here</span>
+      {nav.filter(n => n.label !== 'More').map((n) => <a href={n.href}>{n.label}</a>)}
+    </nav>
+
+    <nav class="ftr-col" aria-label="More">
+      <span class="ftr-head">More</span>
+      {secondaryNav.map((n) => <a href={n.href}>{n.label}</a>)}
+    </nav>
+  </div>
+  <div class="wrap ftr-base">
+    <span>© {year} {site.author}</span>
+    <span class="muted">Built to help managers become leaders.</span>
+  </div>
+</footer>
+
+<style>
+  .ftr { background: var(--ink); color: var(--paper); padding-block: clamp(3rem, 6vw, 4.5rem) 2rem; margin-top: 2rem; }
+  .ftr-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
+  .ftr-mark { font-family: var(--display); font-weight: 600; font-size: 1.4rem; color: var(--paper); }
+  .ftr-thesis { font-family: var(--display); font-style: italic; color: color-mix(in srgb, var(--paper) 78%, transparent); max-width: 34ch; margin: 0.8rem 0 1.2rem; }
+  .ftr-social { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .ftr-social-link {
+    font-size: 0.85rem; font-weight: 600; color: var(--paper); text-decoration: none;
+    border: 1px solid var(--ink-line); padding: 0.4rem 0.8rem; border-radius: 3px; transition: all 0.18s;
+  }
+  .ftr-social-link:hover { border-color: var(--brass); color: var(--brass); }
+  .ftr-col { display: flex; flex-direction: column; gap: 0.6rem; }
+  .ftr-head { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass); margin-bottom: 0.3rem; }
+  .ftr-col a { color: color-mix(in srgb, var(--paper) 82%, transparent); text-decoration: none; font-size: 0.95rem; }
+  .ftr-col a:hover { color: var(--brass); }
+  .ftr-base {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; justify-content: space-between;
+    margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--ink-line);
+    font-size: 0.85rem; color: color-mix(in srgb, var(--paper) 70%, transparent);
+  }
+  @media (min-width: 720px) { .ftr-grid { grid-template-columns: 2fr 1fr 1fr; } }
+</style>

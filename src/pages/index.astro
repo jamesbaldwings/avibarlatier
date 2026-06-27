@@ -1,0 +1,208 @@
+---
+import Base from '../layouts/Base.astro';
+import VideoCard from '../components/VideoCard.astro';
+import SubscribeCTA from '../components/SubscribeCTA.astro';
+import { getCollection } from 'astro:content';
+import { links, channelLive } from '../data/site.js';
+
+const videos = (await getCollection('videos')).sort((a, b) => a.data.order - b.data.order);
+const flagship = videos.find((v) => v.data.flagship) ?? videos[0];
+const otherVideos = videos.filter((v) => v.id !== flagship.id).slice(0, 3);
+const hasFlagshipVideo = flagship?.data.youtubeId?.length > 0;
+
+const themes = [
+  { t: 'Manager to leader', d: 'You were promoted for the work, then handed people. Those are different jobs. This is the bridge.' },
+  { t: 'Authority that lands', d: 'Why "because I said so" stopped working, and what earns followership now without going soft.' },
+  { t: 'Psychological safety', d: 'Making it safe to speak up, in real organizations with real pressure, not poster-slogan safety.' },
+  { t: 'Leading where rules rule', d: 'Care and clarity inside compliance-driven, risk-averse places built to say no.' },
+  { t: 'Hard conversations', d: 'Accountability and feedback that holds the standard without blowing up the relationship.' },
+  { t: 'AI as a leadership tool', d: 'Using technology to make your people more capable, never more replaceable.' },
+];
+---
+<Base>
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <p class="eyebrow hero-eyebrow">For people who lead people</p>
+      <h1 class="hero-title">
+        You were taught to manage.<br />
+        This generation needs you to <em>lead</em>.
+      </h1>
+      <p class="lede hero-lede">
+        The authority you were trained to use doesn't land the way it used to. I make short,
+        animated leadership lessons for managers leading a new generation, drawn from two decades
+        of leading real teams in demanding places.
+      </p>
+      <div class="hero-actions">
+        {channelLive
+          ? <a href={links.youtube} class="btn btn-primary" target="_blank" rel="noopener">Watch on YouTube</a>
+          : <a href="/watch/" class="btn btn-primary">See what's coming</a>}
+        <a href="/leadership/" class="btn btn-outline">Explore the ideas</a>
+      </div>
+    </div>
+    <div class="hero-rule" aria-hidden="true"></div>
+  </section>
+
+  <section class="section problem">
+    <div class="wrap">
+      <div class="problem-grid">
+        <div class="problem-lead reveal">
+          <p class="eyebrow">Sound familiar?</p>
+          <h2>The playbook that built your career stopped working on your team.</h2>
+        </div>
+        <div class="problem-body reveal">
+          <p>You give clear direction and get pushback. You offer feedback and watch someone shut down. You lead the way you were led, and it lands as cold, or controlling, or out of touch.</p>
+          <p>It's tempting to blame the generation. It's more useful to notice that authority changed shape, and nobody handed you the new manual.</p>
+          <p><strong>That's what this is.</strong> Practical, human leadership for the people expected to figure it out without a map.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section featured">
+    <div class="wrap">
+      <p class="eyebrow center">Start here</p>
+      <h2 class="featured-title center">{flagship.data.title}</h2>
+      <div class="featured-player reveal">
+        {hasFlagshipVideo ? (
+          <div class="ratio">
+            <iframe
+              src={`https://www.youtube.com/embed/${flagship.data.youtubeId}`}
+              title={flagship.data.title}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        ) : (
+          <div class="ratio featured-soon">
+            <div class="soon-inner">
+              <span class="soon-mark" aria-hidden="true">&#9654;</span>
+              <p class="soon-head">This is the first lesson dropping on the channel.</p>
+              <p class="soon-sub muted">{flagship.data.description}</p>
+              <a href={links.newsletter} class="btn btn-primary" target="_blank" rel="noopener">Get told when it's live</a>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section more-videos">
+    <div class="wrap">
+      <div class="row-head">
+        <div>
+          <p class="eyebrow">The channel</p>
+          <h2>What's coming to the channel</h2>
+        </div>
+        <a href="/watch/" class="row-link">See all lessons &rarr;</a>
+      </div>
+      <div class="vgrid">
+        {otherVideos.map((v) => (
+          <VideoCard
+            title={v.data.title}
+            description={v.data.description}
+            category={v.data.category}
+            youtubeId={v.data.youtubeId}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section themes">
+    <div class="wrap">
+      <p class="eyebrow">The ideas</p>
+      <h2 class="themes-head">Six things this channel keeps coming back to.</h2>
+      <div class="theme-grid">
+        {themes.map((th) => (
+          <div class="theme-card reveal">
+            <h3>{th.t}</h3>
+            <p class="muted">{th.d}</p>
+          </div>
+        ))}
+      </div>
+      <div class="center" style="margin-top: 2rem;">
+        <a href="/leadership/" class="btn btn-outline">Go deeper on the frameworks</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section book-feature">
+    <div class="wrap book-grid">
+      <div class="book-cover reveal" aria-hidden="true">
+        <div class="book-spine">
+          <span class="book-kicker">The book</span>
+          <span class="book-name">The Human Side of Animal Research</span>
+          <span class="book-sub">Leadership Over Management for a Culture of Care</span>
+        </div>
+      </div>
+      <div class="book-body reveal">
+        <p class="eyebrow">Go deeper</p>
+        <h2>When a video isn't enough, there's the book.</h2>
+        <p>The channel gives you the Monday-morning move. The book gives you the whole philosophy, leadership over management, built for a culture of care, told through real stories from the field.</p>
+        <div class="hero-actions">
+          <a href="/book/" class="btn btn-dark">About the book</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SubscribeCTA variant="auto" />
+</Base>
+
+<style>
+  .hero { padding-top: clamp(3rem, 7vw, 6rem); position: relative; }
+  .hero-inner { max-width: 920px; }
+  .hero-eyebrow { margin-bottom: 1.4rem; }
+  .hero-title { font-size: var(--step-4); font-weight: 600; letter-spacing: -0.025em; margin-bottom: 1.2rem; }
+  .hero-title em { font-style: italic; color: var(--brass-deep); }
+  .hero-lede { max-width: 60ch; margin-bottom: 2rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+  .hero-rule { height: 1px; background: linear-gradient(90deg, var(--brass), transparent); margin-top: clamp(3rem, 6vw, 5rem); }
+
+  .problem-grid { display: grid; gap: 2rem; }
+  .problem-lead h2 { font-size: var(--step-2); }
+  .problem-body p:last-child { margin-bottom: 0; }
+  @media (min-width: 820px) {
+    .problem-grid { grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+  }
+
+  .featured { background: var(--paper-pure); border-block: 1px solid var(--cream-line); }
+  .featured-title { font-size: var(--step-3); max-width: 20ch; margin-inline: auto; margin-bottom: 2rem; }
+  .featured-player { max-width: 880px; margin-inline: auto; }
+  .ratio { position: relative; aspect-ratio: 16/9; border-radius: var(--radius); overflow: hidden; box-shadow: 0 30px 60px -30px rgba(22,32,46,0.5); }
+  .ratio iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .featured-soon { background: var(--ink); display: grid; place-content: center; }
+  .soon-inner { text-align: center; max-width: 440px; padding: 2rem; }
+  .soon-inner .soon-mark { font-size: 2.2rem; color: color-mix(in srgb, var(--brass) 70%, transparent); display: block; margin-bottom: 1rem; }
+  .soon-head { font-family: var(--display); font-size: var(--step-1); color: var(--paper); margin-bottom: 0.6rem; }
+  .soon-sub { color: color-mix(in srgb, var(--paper) 72%, transparent); font-size: 0.95rem; margin-bottom: 1.4rem; }
+
+  .row-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .row-link { font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .vgrid { display: grid; gap: 1.4rem; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .vgrid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .vgrid { grid-template-columns: repeat(3, 1fr); } }
+
+  .themes { background: var(--paper-pure); border-block: 1px solid var(--cream-line); }
+  .themes-head { font-size: var(--step-2); max-width: 22ch; margin-bottom: 2.5rem; }
+  .theme-grid { display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
+  .theme-card { padding: 1.6rem; background: var(--paper); border: 1px solid var(--cream-line); border-radius: var(--radius); border-left: 3px solid var(--brass); }
+  .theme-card h3 { font-size: var(--step-1); margin-bottom: 0.4rem; }
+  .theme-card p { margin: 0; font-size: 0.95rem; }
+  @media (min-width: 640px) { .theme-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .theme-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .book-grid { display: grid; gap: 2.5rem; align-items: center; }
+  .book-cover { display: grid; place-items: center; }
+  .book-spine {
+    aspect-ratio: 2/3; width: min(260px, 70vw); background: linear-gradient(155deg, var(--ink), var(--ink-soft));
+    border-radius: 3px; box-shadow: 0 30px 60px -25px rgba(22,32,46,0.6); padding: 2rem 1.6rem;
+    display: flex; flex-direction: column; gap: 0.8rem; border-left: 5px solid var(--brass);
+  }
+  .book-kicker { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); font-weight: 700; }
+  .book-name { font-family: var(--display); font-size: 1.5rem; color: var(--paper); line-height: 1.1; margin-top: auto; }
+  .book-sub { font-family: var(--display); font-style: italic; font-size: 0.95rem; color: color-mix(in srgb, var(--paper) 75%, transparent); }
+  .book-body h2 { font-size: var(--step-2); }
+  @media (min-width: 820px) { .book-grid { grid-template-columns: 0.8fr 1.2fr; gap: 4rem; } }
+</style>

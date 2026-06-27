@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SubscribeCTA from '../components/SubscribeCTA.astro';
+---
+<Base
+  title="About"
+  description="Avi Barlatier spent two decades leading teams in demanding, compliance-heavy environments before turning to teaching leadership. His work connects people, technology, and the future of work."
+>
+  <PageHeader
+    eyebrow="About"
+    title="I learned leadership where the stakes were real."
+    lede="Two decades leading teams in research and animal care, places where the rules are strict, the work is emotional, and people matter more than process pretends to admit."
+  />
+
+  <section class="section">
+    <div class="wrap prose">
+      <p>Most leadership advice is written by people who studied leadership. Mine comes from doing it, for twenty years, in some of the most demanding and least forgiving environments there are.</p>
+
+      <p>I came up through veterinary technology and laboratory animal care, and moved into leadership in a division of animal care at a major academic medical institution. These are workplaces governed by compliance, safety, and oversight, where a single mistake carries real weight, and where the people doing the work carry an emotional load most jobs never ask for. Leading well there isn't optional. It's the difference between a team that endures and a team that burns out.</p>
+
+      <p>Along the way I also became a builder. I hold an MBA in information technology and a PMP, I'm pursuing a Ph.D. in cybersecurity, and I write and ship software, real products used by real people. That combination taught me something I keep coming back to: <strong>technology should make people more capable, not more replaceable.</strong> The same is true of leadership. The job isn't to control people. It's to make them more capable than they were.</p>
+
+      <h2>Why I make leadership videos</h2>
+
+      <p>I kept watching good, capable managers struggle with the same thing. They earned their positions, they knew the work, and they led the way they'd been led, and it wasn't landing with a new generation of workers. The authority that used to just work didn't anymore. And no one was teaching them what to do instead.</p>
+
+      <p>So I started teaching it. Short, animated, practical, the way I wish someone had taught me. The channel, the book, and the writing all come from the same place: a belief that managing and leading are different jobs, and that anyone willing to learn the second one can.</p>
+
+      <h2>The throughline</h2>
+
+      <p>Veterinary care, technology, AI, writing, teaching. On paper it looks scattered. In practice it's one question asked in different rooms: how do we use systems and authority to make people more capable, more trusted, and more human at work? That's the whole project.</p>
+    </div>
+  </section>
+
+  <SubscribeCTA variant="auto" />
+</Base>
+
+<style>
+  .prose { max-width: 68ch; }
+  .prose h2 { font-size: var(--step-2); margin-top: 2.5rem; }
+  .prose p { font-size: var(--step-0); }
+</style>

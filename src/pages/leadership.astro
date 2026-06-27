@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SubscribeCTA from '../components/SubscribeCTA.astro';
+
+const frameworks = [
+  {
+    name: 'Manager to leader',
+    body: 'A manager makes sure the work gets done. A leader makes sure the people doing it grow. Most people are trained for the first and judged on the second. The transition is learnable, and it starts with seeing them as two distinct jobs.',
+  },
+  {
+    name: 'The five Cs',
+    body: 'Care, clarity, courage, creativity, consistency. Not a slogan, a checklist for the moments that test you. Most leadership failures trace back to one of these going missing under pressure.',
+  },
+  {
+    name: 'Care, Uphold, Direct',
+    body: 'Three moves that look like they conflict and actually reinforce each other: care for the person, uphold the standard, direct the work. Drop any one and leadership collapses into either softness or control.',
+  },
+  {
+    name: 'The toxic hierarchy',
+    body: 'Fear, favoritism, and exclusion are the three failure modes that quietly rot a team. Naming them is the first defense. Most leaders fall into one without realizing it.',
+  },
+  {
+    name: 'Psychological safety, for real',
+    body: 'Not the poster version. The practical version: how you make it genuinely safe to speak up, admit a mistake, or disagree, inside an organization with real pressure and real consequences.',
+  },
+  {
+    name: 'Leading where rules rule',
+    body: 'Compliance-driven, risk-averse organizations train people to avoid mistakes, which can quietly crush initiative. Leading with care inside a system built to say no is its own discipline.',
+  },
+];
+---
+<Base
+  title="Leadership"
+  description="The frameworks behind the channel: manager to leader, the five Cs, psychological safety, and leading in compliance-driven organizations."
+>
+  <PageHeader
+    eyebrow="The frameworks"
+    title="The ideas the videos are built on."
+    lede="Every lesson on the channel traces back to a handful of frameworks. Here's the map. The videos make each one concrete."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="fw-grid">
+        {frameworks.map((f) => (
+          <article class="fw-card reveal">
+            <h2>{f.name}</h2>
+            <p class="muted">{f.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section philosophy">
+    <div class="wrap">
+      <p class="eyebrow">The center of it</p>
+      <blockquote class="big-quote">
+        Technology should make people more capable, not more replaceable. Leadership works the same way: the job is to make your people more than they were, not to control what they do.
+      </blockquote>
+    </div>
+  </section>
+
+  <SubscribeCTA variant="auto" />
+</Base>
+
+<style>
+  .fw-grid { display: grid; gap: 1.4rem; grid-template-columns: 1fr; }
+  .fw-card { padding: 1.8rem; background: var(--paper-pure); border: 1px solid var(--cream-line); border-radius: var(--radius); border-top: 3px solid var(--brass); }
+  .fw-card h2 { font-size: var(--step-1); margin-bottom: 0.6rem; }
+  .fw-card p { margin: 0; font-size: 0.95rem; }
+  @media (min-width: 700px) { .fw-grid { grid-template-columns: repeat(2, 1fr); } }
+  .philosophy { background: var(--ink); }
+  .big-quote { margin: 0; max-width: 24ch; font-family: var(--display); font-size: var(--step-2); line-height: 1.25; color: var(--paper); font-style: italic; border: 0; padding: 0; }
+  .philosophy .eyebrow { color: var(--brass); }
+</style>

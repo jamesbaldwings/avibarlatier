@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { links } from '../data/site.js';
+const socials = [
+  links.youtube && { l:'YouTube', h:links.youtube },
+  links.github && { l:'GitHub', h:links.github },
+  links.linkedin && { l:'LinkedIn', h:links.linkedin },
+  links.newsletter && { l:'Newsletter', h:links.newsletter },
+].filter(Boolean);
+---
+<Base title="Contact" description="Get in touch with Avi Barlatier about speaking, teaching, collaboration, or the work.">
+  <PageHeader eyebrow="Contact" title="Let's talk."
+    lede="Speaking, teaching, collaboration, or just a good question, this reaches me." />
+  <section class="section"><div class="wrap contact-grid">
+    <form class="cform" action={`mailto:${links.email}`} method="post" enctype="text/plain">
+      <label>Name <input type="text" name="name" required /></label>
+      <label>Email <input type="email" name="email" required /></label>
+      <label>What's this about?
+        <select name="topic">
+          <option>Speaking</option><option>Teaching / faculty</option>
+          <option>Collaboration</option><option>The book</option><option>Something else</option>
+        </select>
+      </label>
+      <label>Message <textarea name="message" rows="5" required></textarea></label>
+      <button type="submit" class="btn btn-primary">Send message</button>
+      <p class="form-note muted">Opens your email app. Prefer direct? <a href={`mailto:${links.email}`}>{links.email}</a></p>
+    </form>
+    <aside class="contact-side">
+      <h2>Elsewhere</h2>
+      <ul class="social-list">
+        {socials.map((s)=><li><a href={s.h} target="_blank" rel="noopener">{s.l} &rarr;</a></li>)}
+        <li><a href={`mailto:${links.email}`}>Email &rarr;</a></li>
+      </ul>
+    </aside>
+  </div></section>
+</Base>
+<style>
+  .contact-grid { display: grid; gap: 2.5rem; }
+  .cform { display: grid; gap: 1.1rem; max-width: 520px; }
+  .cform label { display: grid; gap: 0.4rem; font-weight: 600; font-size: 0.9rem; color: var(--ink); }
+  .cform input, .cform select, .cform textarea { font-family: var(--body); font-size: 1rem; padding: 0.75rem 0.9rem; border: 1px solid var(--cream-line); border-radius: var(--radius); background: var(--paper-pure); color: var(--charcoal); }
+  .cform input:focus, .cform select:focus, .cform textarea:focus { outline: 2px solid var(--brass); border-color: var(--brass); }
+  .cform .btn { justify-self: start; }
+  .form-note { font-size: 0.85rem; margin: 0; }
+  .contact-side h2 { font-size: var(--step-1); }
+  .social-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+  .social-list a { font-weight: 600; text-decoration: none; }
+  @media (min-width: 760px) { .contact-grid { grid-template-columns: 1.4fr 0.6fr; gap: 4rem; } }
+</style>

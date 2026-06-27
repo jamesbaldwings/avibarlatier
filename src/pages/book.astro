@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro';
+import SubscribeCTA from '../components/SubscribeCTA.astro';
+import { links } from '../data/site.js';
+---
+<Base
+  title="The Book"
+  description="The Human Side of Animal Research: Leadership Over Management for a Culture of Care, by Avi Barlatier. A field guide to leading people in demanding, compliance-heavy work."
+>
+  <section class="section book-hero">
+    <div class="wrap book-hero-grid">
+      <div class="cover-col reveal">
+        <div class="book-spine">
+          <span class="book-kicker">A book by Avi Barlatier</span>
+          <span class="book-name">The Human Side of Animal Research</span>
+          <span class="book-sub">Leadership Over Management for a Culture of Care</span>
+        </div>
+      </div>
+      <div class="intro-col">
+        <p class="eyebrow">The book</p>
+        <h1 class="book-h1">The whole philosophy, not just the Monday move.</h1>
+        <p class="lede">The channel hands you one lesson at a time. The book is the complete argument for leading people, not just managing tasks, drawn from a career in some of the most demanding workplaces there are.</p>
+        <div class="book-actions">
+          {links.book
+            ? <a href={links.book} class="btn btn-primary" target="_blank" rel="noopener">Get the book</a>
+            : <a href={links.newsletter} class="btn btn-primary" target="_blank" rel="noopener">Get notified at launch</a>}
+          <a href="/leadership/" class="btn btn-outline">See the frameworks</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap two-col">
+      <div>
+        <h2>What it's about</h2>
+        <p>Animal research is one of the most emotionally and ethically demanding fields of work there is. The people in it carry a weight that most management training never accounts for. This book is about leading them well, and the lessons reach far beyond the lab.</p>
+        <p>It makes a simple case: a culture of care isn't built by policy. It's built by leaders who choose, repeatedly, to lead the human in front of them instead of just managing the task. The book shows how, through real stories, named characters, and frameworks you can actually use.</p>
+      </div>
+      <div>
+        <h2>Who it's for</h2>
+        <ul class="audience">
+          <li>New and struggling people-leaders</li>
+          <li>Managers in compliance-heavy or high-stakes work</li>
+          <li>Anyone building a culture of care from the middle</li>
+          <li>Leaders who feel the old playbook slipping</li>
+        </ul>
+        <h2 style="margin-top:2rem;">Key themes</h2>
+        <ul class="audience">
+          <li>Leadership over management</li>
+          <li>Psychological safety under real pressure</li>
+          <li>Care, clarity, courage, creativity, consistency</li>
+          <li>Trust in risk-averse organizations</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <SubscribeCTA variant="newsletter" />
+</Base>
+
+<style>
+  .book-hero { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
+  .book-hero-grid { display: grid; gap: 2.5rem; align-items: center; }
+  .cover-col { display: grid; place-items: center; }
+  .book-spine {
+    aspect-ratio: 2/3; width: min(300px, 75vw); background: linear-gradient(155deg, var(--ink), var(--ink-soft));
+    border-radius: 3px; box-shadow: 0 36px 70px -28px rgba(22,32,46,0.65); padding: 2.4rem 2rem;
+    display: flex; flex-direction: column; gap: 0.9rem; border-left: 6px solid var(--brass);
+  }
+  .book-kicker { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); font-weight: 700; }
+  .book-name { font-family: var(--display); font-size: 1.7rem; color: var(--paper); line-height: 1.1; margin-top: auto; }
+  .book-sub { font-family: var(--display); font-style: italic; font-size: 1rem; color: color-mix(in srgb, var(--paper) 78%, transparent); }
+  .book-h1 { font-size: var(--step-3); }
+  .book-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.5rem; }
+  @media (min-width: 820px) { .book-hero-grid { grid-template-columns: 0.9fr 1.1fr; gap: 4rem; } }
+  .two-col { display: grid; gap: 2.5rem; }
+  .two-col h2 { font-size: var(--step-2); }
+  .audience { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
+  .audience li { padding-left: 1.4rem; position: relative; }
+  .audience li::before { content: "\2014"; position: absolute; left: 0; color: var(--brass-deep); }
+  @media (min-width: 760px) { .two-col { grid-template-columns: 1fr 1fr; gap: 3.5rem; } }
+</style>

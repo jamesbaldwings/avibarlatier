@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { links } from '../data/site.js';
+const topics = [
+  'Helping managers become leaders for a new generation',
+  'Why "because I said so" stopped working',
+  'Psychological safety in risk-averse organizations',
+  'AI as a leadership tool, not a replacement',
+  'Building trust in compliance-driven workplaces',
+  'Human-centered AI in real organizations',
+  'From technician to technology leader',
+];
+---
+<Base
+  title="Speaking"
+  description="Avi Barlatier speaks on leadership, the manager-to-leader shift, psychological safety, and human-centered technology for teams and conferences."
+>
+  <PageHeader
+    eyebrow="Speaking"
+    title="Talks that help leaders lead a changing workforce."
+    lede="I speak to teams, conferences, and leadership programs on what it takes to lead people well when the old authority no longer works."
+  />
+  <section class="section">
+    <div class="wrap">
+      <h2>Topics</h2>
+      <ul class="topic-list">
+        {topics.map((t) => <li>{t}</li>)}
+      </ul>
+      <div class="book-band">
+        <h2>Interested in having me speak?</h2>
+        <p class="muted">Tell me about your audience and what you want them to walk away with.</p>
+        <a href="/contact/" class="btn btn-primary">Start a conversation</a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .topic-list { list-style: none; padding: 0; margin: 1.2rem 0 0; display: grid; gap: 0.7rem; }
+  .topic-list li { padding: 1rem 1.2rem; background: var(--paper-pure); border: 1px solid var(--cream-line); border-left: 3px solid var(--brass); border-radius: var(--radius); font-family: var(--display); font-size: var(--step-1); color: var(--ink); }
+  .book-band { margin-top: 3rem; padding: 2.5rem; background: var(--ink); border-radius: var(--radius); text-align: center; }
+  .book-band h2 { color: var(--paper); font-size: var(--step-2); }
+  .book-band p { color: color-mix(in srgb, var(--paper) 80%, transparent); margin-inline: auto; }
+  .book-band .btn { margin-top: 1rem; }
+</style>

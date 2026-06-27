@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { secondaryNav } from '../data/site.js';
+const desc = {
+  '/teaching/':'Adjunct faculty interests and the courses I support.',
+  '/research/':'Ph.D. work in cybersecurity and human-centered AI.',
+  '/software/':'Tools and products I have designed and shipped.',
+  '/credentials/':'The training and certifications behind the work.',
+  '/articles/':'Longer-form writing on leadership and technology.',
+  '/contact/':'Speaking, teaching, collaboration, or a good question.',
+};
+---
+<Base title="More" description="Explore Avi Barlatier's teaching, research, software, credentials, writing, and contact.">
+  <PageHeader eyebrow="More" title="The rest of the work."
+    lede="The channel and the book are the front door. Here's everything else, teaching, research, software, and how to reach me." />
+  <section class="section"><div class="wrap">
+    <div class="hub-grid">
+      {secondaryNav.map((n)=>(
+        <a href={n.href} class="hub-card">
+          <h2>{n.label}</h2>
+          <p class="muted">{desc[n.href]}</p>
+          <span class="hub-go">Open &rarr;</span>
+        </a>
+      ))}
+    </div>
+  </div></section>
+</Base>
+<style>
+  .hub-grid { display: grid; gap: 1.3rem; grid-template-columns: 1fr; }
+  .hub-card { display: flex; flex-direction: column; padding: 1.8rem; background: var(--paper-pure); border: 1px solid var(--cream-line); border-radius: var(--radius); text-decoration: none; border-top: 3px solid var(--brass); transition: transform 0.18s, box-shadow 0.18s; }
+  .hub-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -22px rgba(22,32,46,0.4); }
+  .hub-card h2 { font-size: var(--step-1); margin: 0 0 0.4rem; }
+  .hub-card p { margin: 0 0 1rem; font-size: 0.92rem; }
+  .hub-go { margin-top: auto; font-weight: 600; color: var(--brass-deep); }
+  @media (min-width: 640px) { .hub-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (min-width: 960px) { .hub-grid { grid-template-columns: repeat(3,1fr); } }
+</style>

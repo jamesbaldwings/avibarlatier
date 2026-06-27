@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Page not found" noindex={true}>
+  <section class="section center" style="padding-block: clamp(4rem,10vw,7rem);">
+    <div class="wrap">
+      <p class="eyebrow" style="justify-content:center;">404</p>
+      <h1 style="font-size: var(--step-3);">That page wandered off.</h1>
+      <p class="lede" style="margin-inline:auto;">Let's get you back to something useful.</p>
+      <div style="display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap; margin-top:1.5rem;">
+        <a href="/" class="btn btn-primary">Home</a>
+        <a href="/watch/" class="btn btn-outline">The channel</a>
+      </div>
+    </div>
+  </section>
+</Base>

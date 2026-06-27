@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://avibarlatier.com/sitemap-index.xml

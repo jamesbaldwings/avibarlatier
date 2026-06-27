@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('articles'))
+  .filter((p)=>!p.data.draft)
+  .sort((a,b)=>b.data.date.valueOf()-a.data.date.valueOf());
+---
+<Base title="Articles" description="Writing on leadership, workplace culture, AI and work, and the shift from managing to leading, by Avi Barlatier.">
+  <PageHeader eyebrow="Articles" title="Writing between the videos."
+    lede="Longer-form thinking on leadership, culture, and technology, for when a topic needs more than a short film." />
+  <section class="section"><div class="wrap">
+    <ul class="post-list">
+      {posts.map((p)=>(
+        <li class="post">
+          <a href={`/articles/${p.id}/`}>
+            <span class="post-cat">{p.data.category}</span>
+            <h2>{p.data.title}</h2>
+            <p class="muted">{p.data.description}</p>
+            <time class="post-date">{p.data.date.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}</time>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div></section>
+</Base>
+<style>
+  .post-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.2rem; max-width: 760px; }
+  .post a { display: block; padding: 1.6rem 1.8rem; background: var(--paper-pure); border: 1px solid var(--cream-line); border-radius: var(--radius); text-decoration: none; transition: transform 0.18s, box-shadow 0.18s; }
+  .post a:hover { transform: translateY(-3px); box-shadow: 0 16px 36px -20px rgba(22,32,46,0.4); }
+  .post-cat { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass-deep); }
+  .post h2 { font-size: var(--step-1); margin: 0.4rem 0 0.5rem; }
+  .post p { margin: 0 0 0.8rem; }
+  .post-date { font-size: 0.82rem; color: var(--charcoal-soft); }
+</style>

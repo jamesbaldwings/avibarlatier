@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+const courses = ['Artificial Intelligence','Machine Learning','Cybersecurity','Software Engineering','Database Design','Data Analytics','Systems Analysis','Networking'];
+---
+<Base title="Teaching" description="Avi Barlatier teaches at the intersection of technology, leadership, and human-centered systems, and supports graduate courses in AI, cybersecurity, and software engineering.">
+  <PageHeader eyebrow="Teaching" title="I teach technology as a human discipline."
+    lede="My teaching connects technical skill with the judgment to use it well. I'm available as adjunct faculty for graduate and upper-level courses in technology and computing." />
+  <section class="section"><div class="wrap two-col">
+    <div>
+      <h2>Teaching philosophy</h2>
+      <p>The best technologists aren't the ones who know the most tools. They're the ones who understand what technology does to people, and choose to build systems that make people more capable rather than more replaceable. I teach toward that judgment, not just the syntax.</p>
+      <p>I draw on two decades of real operational leadership, an MBA in information technology, a PMP, and active Ph.D. work in cybersecurity. Students get theory grounded in what actually happens when these systems meet real organizations.</p>
+      <h2 style="margin-top:2rem;">Documents</h2>
+      <ul class="docs">
+        <li><span>Resume (PDF)</span> <span class="muted">coming soon</span></li>
+        <li><span>Academic CV (PDF)</span> <span class="muted">coming soon</span></li>
+        <li><span>Teaching philosophy statement (PDF)</span> <span class="muted">coming soon</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Courses I can support</h2>
+      <ul class="courses">{courses.map((c)=><li>{c}</li>)}</ul>
+    </div>
+  </div></section>
+</Base>
+<style>
+  .two-col { display: grid; gap: 2.5rem; }
+  .two-col h2 { font-size: var(--step-2); }
+  .courses, .docs { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 0.6rem; }
+  .courses li { padding: 0.8rem 1rem; background: var(--paper-pure); border: 1px solid var(--cream-line); border-left: 3px solid var(--brass); border-radius: var(--radius); font-weight: 500; }
+  .docs li { padding: 0.6rem 0; border-bottom: 1px solid var(--cream-line); }
+  @media (min-width: 760px) { .two-col { grid-template-columns: 1.2fr 0.8fr; gap: 3.5rem; } }
+</style>

@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import VideoCard from '../components/VideoCard.astro';
+import SubscribeCTA from '../components/SubscribeCTA.astro';
+import { getCollection } from 'astro:content';
+import { channelLive, links } from '../data/site.js';
+
+const videos = (await getCollection('videos')).sort((a, b) => a.data.order - b.data.order);
+const categories = [
+  'New Manager Basics', 'Psychological Safety', 'Leading in Risk-Averse Organizations',
+  'Compliance vs Care', 'Conflict and Accountability', 'AI and the Future of Management',
+];
+---
+<Base
+  title="Watch"
+  description="Animated leadership lessons for managers leading a new generation. Short, practical videos on the manager-to-leader shift, psychological safety, and hard conversations."
+>
+  <PageHeader
+    eyebrow="The channel"
+    title="Leadership, one hard moment at a time."
+    lede="Short animated lessons that take a single leadership challenge and turn it into something you can use this week. New videos land regularly."
+  >
+    {!channelLive && (
+      <p class="soon-note">The channel launches soon. Join the newsletter and you'll be the first to know when the first lesson drops.</p>
+    )}
+  </PageHeader>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="vgrid">
+        {videos.map((v) => (
+          <VideoCard
+            title={v.data.title}
+            description={v.data.description}
+            category={v.data.category}
+            youtubeId={v.data.youtubeId}
+            flagship={v.data.flagship}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cats">
+    <div class="wrap">
+      <p class="eyebrow">What you'll find here</p>
+      <h2>The series running on the channel</h2>
+      <ul class="cat-list">
+        {categories.map((c) => <li>{c}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <SubscribeCTA variant="auto" />
+</Base>
+
+<style>
+  .soon-note { margin-top: 1.5rem; padding: 1rem 1.2rem; background: color-mix(in srgb, var(--brass) 12%, transparent); border-left: 3px solid var(--brass); border-radius: var(--radius); font-size: 0.95rem; max-width: 60ch; }
+  .vgrid { display: grid; gap: 1.4rem; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .vgrid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .vgrid { grid-template-columns: repeat(3, 1fr); } }
+  .cats { background: var(--paper-pure); border-top: 1px solid var(--cream-line); }
+  .cat-list { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0.7rem; grid-template-columns: 1fr; }
+  .cat-list li { padding: 0.9rem 1.1rem; background: var(--paper); border: 1px solid var(--cream-line); border-radius: var(--radius); font-family: var(--display); font-size: var(--step-1); color: var(--ink); border-left: 3px solid var(--brass); }
+  @media (min-width: 700px) { .cat-list { grid-template-columns: repeat(2, 1fr); } }
+</style>
