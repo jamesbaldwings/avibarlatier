@@ -1,5 +1,6 @@
 ---
 import { links, channelLive } from '../data/site.js';
+import NewsletterForm from './NewsletterForm.astro';
 const { variant = 'auto' } = Astro.props;
 // variant: 'auto' uses channelLive; 'subscribe' forces YT; 'newsletter' forces email
 const showSubscribe = variant === 'subscribe' || (variant === 'auto' && channelLive);
@@ -21,8 +22,8 @@ const showSubscribe = variant === 'subscribe' || (variant === 'auto' && channelL
         <p class="eyebrow" style="color: var(--brass);">Get it first</p>
         <h2 class="cta-title">The lessons land in your inbox before they hit YouTube.</h2>
         <p class="cta-sub">Join <em>Humane Resources</em> for practical leadership notes written for managers leading a new generation. The video channel launches soon, subscribers hear first.</p>
-        <div class="cta-actions">
-          <a href={links.newsletter} class="btn btn-primary" target="_blank" rel="noopener">Join the newsletter</a>
+        <div class="cta-actions cta-form">
+          <NewsletterForm dark={true} />
         </div>
       </>
     )}

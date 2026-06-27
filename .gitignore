@@ -2,6 +2,8 @@
 dist/
 # generated types
 .astro/
+# local admin/page-visibility store (DATA_DIR fallback)
+.data/
 
 # dependencies
 node_modules/

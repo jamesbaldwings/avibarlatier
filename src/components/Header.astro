@@ -1,6 +1,9 @@
 ---
 import { nav, site } from '../data/site.js';
 const path = Astro.url.pathname;
+// Hide links to pages an admin has unpublished (helper set in src/middleware.js).
+const isPublished = Astro.locals.isPublished ?? (() => true);
+const visibleNav = nav.filter((item) => isPublished(item.href));
 ---
 <header class="hdr">
   <div class="wrap hdr-inner">
@@ -10,7 +13,7 @@ const path = Astro.url.pathname;
     </a>
 
     <nav class="nav-desktop" aria-label="Primary">
-      {nav.map((item) => (
+      {visibleNav.map((item) => (
         <a
           href={item.href}
           class:list={['nav-link', { active: path === item.href }]}
@@ -23,7 +26,7 @@ const path = Astro.url.pathname;
         <span></span><span></span><span></span>
       </summary>
       <div class="nav-mobile-panel">
-        {nav.map((item) => (
+        {visibleNav.map((item) => (
           <a href={item.href} class:list={['nav-link', { active: path === item.href }]}>{item.label}</a>
         ))}
       </div>

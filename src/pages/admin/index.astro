@@ -1,0 +1,126 @@
+---
+import Admin from '../../layouts/Admin.astro';
+import { getOverrides } from '../../lib/store.js';
+import { pagesWithState } from '../../lib/pages.js';
+
+// Auth is enforced by src/middleware.js before this renders.
+const overrides = await getOverrides();
+const pages = pagesWithState(overrides);
+const groups = [
+  { name: 'Primary navigation', items: pages.filter((p) => p.group === 'Primary') },
+  { name: 'Secondary pages', items: pages.filter((p) => p.group === 'Secondary') },
+];
+---
+<Admin title="Pages">
+  <header class="ahead">
+    <div>
+      <p class="eyebrow">Admin</p>
+      <h1>Page visibility</h1>
+      <p class="muted intro">
+        Hide any page that isn't ready. Hidden pages disappear from the site's
+        navigation and show a “coming soon” notice (with the newsletter signup)
+        to anyone who visits the URL directly. Changes are live immediately.
+      </p>
+    </div>
+    <form method="POST" action="/api/admin/logout" class="logout">
+      <button type="submit" class="btn btn-outline">Sign out</button>
+    </form>
+  </header>
+
+  {groups.map((group) => (
+    <section class="group">
+      <h2 class="group-name">{group.name}</h2>
+      <ul class="rows">
+        {group.items.map((p) => (
+          <li class="row" data-path={p.path}>
+            <div class="row-info">
+              <span class="row-label">{p.label}</span>
+              <a class="row-path" href={p.path} target="_blank" rel="noopener">{p.path}</a>
+            </div>
+            <span class="state" data-state>{p.published ? 'Live' : 'Hidden'}</span>
+            <form method="POST" action="/api/admin/toggle" class="toggle-form">
+              <input type="hidden" name="path" value={p.path} />
+              <input type="hidden" name="published" value={(!p.published).toString()} data-target />
+              <button
+                type="submit"
+                class:list={['switch', { on: p.published }]}
+                role="switch"
+                aria-checked={p.published ? 'true' : 'false'}
+                aria-label={`Toggle ${p.label}`}
+              ><span class="knob"></span></button>
+            </form>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</Admin>
+
+<script>
+  // Progressive enhancement: toggle instantly via fetch, no full reload.
+  // Without JS, each form posts normally and the endpoint redirects back.
+  document.querySelectorAll('.toggle-form').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const row = form.closest('.row');
+      const targetInput = form.querySelector('[data-target]');
+      const btn = form.querySelector('.switch');
+      const stateEl = row.querySelector('[data-state]');
+      const published = targetInput.value === 'true';
+      btn.disabled = true;
+      try {
+        const res = await fetch('/api/admin/toggle', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ path: form.querySelector('[name=path]').value, published }),
+        });
+        if (!res.ok) throw new Error('Request failed');
+        const data = await res.json();
+        btn.classList.toggle('on', data.published);
+        btn.setAttribute('aria-checked', String(data.published));
+        stateEl.textContent = data.published ? 'Live' : 'Hidden';
+        targetInput.value = (!data.published).toString();
+      } catch (err) {
+        alert('Could not update. Please try again.');
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  });
+</script>
+
+<style>
+  .ahead { display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .ahead h1 { font-size: var(--step-2); margin-bottom: 0.6rem; }
+  .intro { max-width: 52ch; font-size: 0.95rem; }
+  .logout { margin: 0; }
+  .group { margin-bottom: 2.5rem; }
+  .group-name { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass-deep); margin-bottom: 0.8rem; }
+  .rows { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .row {
+    display: flex; align-items: center; gap: 1rem;
+    background: var(--paper-pure); border: 1px solid var(--cream-line);
+    border-radius: var(--radius); padding: 0.85rem 1.1rem;
+  }
+  .row-info { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; min-width: 0; }
+  .row-label { font-family: var(--display); font-weight: 600; font-size: 1.05rem; color: var(--ink); }
+  .row-path { font-size: 0.82rem; color: var(--charcoal-soft); text-decoration: none; }
+  .row-path:hover { color: var(--brass-deep); text-decoration: underline; }
+  .state { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--charcoal-soft); min-width: 3.4em; text-align: right; }
+  .toggle-form { margin: 0; }
+  .switch {
+    --w: 46px; --h: 26px;
+    position: relative; width: var(--w); height: var(--h); flex: none;
+    border: none; padding: 0; cursor: pointer; border-radius: 999px;
+    background: #c9c0ad; transition: background 0.18s ease;
+  }
+  .switch.on { background: var(--brass); }
+  .switch .knob {
+    position: absolute; top: 3px; left: 3px; width: 20px; height: 20px;
+    background: #fff; border-radius: 50%; transition: transform 0.18s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .switch.on .knob { transform: translateX(20px); }
+  .switch:disabled { opacity: 0.5; cursor: wait; }
+  .switch:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+</style>

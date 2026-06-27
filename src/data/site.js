@@ -13,9 +13,14 @@ export const site = {
 
 // Set these to live URLs when ready. Empty youtube = "launching soon" mode.
 export const links = {
-  youtube: '', // e.g. 'https://youtube.com/@avibarlatier' — empty until videos are live
-  youtubeChannelId: '', // for the subscribe button embed
-  newsletter: 'https://humaneresources.news',
+  youtube: 'https://www.youtube.com/@imavib', // channel URL
+  youtubeHandle: 'imavib', // used to auto-pull latest videos via RSS (no API key)
+  youtubeChannelId: 'UCHS2dtQMlNUxqUMD1LeiCfQ', // @imavib — skips handle resolution
+  newsletter: 'https://www.humaneresources.news',
+  // beehiiv embed: paste the src URL from your beehiiv embed <iframe>
+  // (Dashboard → Settings → Subscribe Forms → Embed). Leave '' to fall back
+  // to a button linking to the newsletter.
+  beehiivEmbedUrl: '',
   book: '', // book buy/preorder link
   github: 'https://github.com/jamesbaldwings',
   linkedin: '', // placeholder

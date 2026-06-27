@@ -1,6 +1,10 @@
 ---
 import { nav, secondaryNav, links, site } from '../data/site.js';
 const year = new Date().getFullYear();
+// Hide links to unpublished pages (helper set in src/middleware.js).
+const isPublished = Astro.locals.isPublished ?? (() => true);
+const visibleNav = nav.filter((n) => isPublished(n.href));
+const visibleSecondary = secondaryNav.filter((n) => isPublished(n.href));
 const social = [
   links.youtube && { label: 'YouTube', href: links.youtube },
   links.github && { label: 'GitHub', href: links.github },
@@ -20,12 +24,12 @@ const social = [
 
     <nav class="ftr-col" aria-label="Main">
       <span class="ftr-head">Start here</span>
-      {nav.filter(n => n.label !== 'More').map((n) => <a href={n.href}>{n.label}</a>)}
+      {visibleNav.filter(n => n.label !== 'More').map((n) => <a href={n.href}>{n.label}</a>)}
     </nav>
 
     <nav class="ftr-col" aria-label="More">
       <span class="ftr-head">More</span>
-      {secondaryNav.map((n) => <a href={n.href}>{n.label}</a>)}
+      {visibleSecondary.map((n) => <a href={n.href}>{n.label}</a>)}
     </nav>
   </div>
   <div class="wrap ftr-base">

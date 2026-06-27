@@ -3,10 +3,14 @@ import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import VideoCard from '../components/VideoCard.astro';
 import SubscribeCTA from '../components/SubscribeCTA.astro';
+import YouTubeCarousel from '../components/YouTubeCarousel.astro';
 import { getCollection } from 'astro:content';
+import { getChannelVideos } from '../lib/youtube.js';
 import { channelLive, links } from '../data/site.js';
 
 const videos = (await getCollection('videos')).sort((a, b) => a.data.order - b.data.order);
+// Latest uploads pulled live from the @imavib channel (empty until videos exist).
+const channelVideos = await getChannelVideos(9);
 const categories = [
   'New Manager Basics', 'Psychological Safety', 'Leading in Risk-Averse Organizations',
   'Compliance vs Care', 'Conflict and Accountability', 'AI and the Future of Management',
@@ -25,6 +29,12 @@ const categories = [
       <p class="soon-note">The channel launches soon. Join the newsletter and you'll be the first to know when the first lesson drops.</p>
     )}
   </PageHeader>
+
+  <YouTubeCarousel
+    videos={channelVideos}
+    eyebrow="Straight from YouTube"
+    title="Latest from the channel"
+  />
 
   <section class="section">
     <div class="wrap">

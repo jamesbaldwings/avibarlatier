@@ -2,6 +2,9 @@
 import Base from '../../layouts/Base.astro';
 import SubscribeCTA from '../../components/SubscribeCTA.astro';
 import { getCollection, render } from 'astro:content';
+// Prerender article detail pages at build (static); they aren't individually
+// gated by the admin. The site is otherwise server-rendered (output: 'server').
+export const prerender = true;
 export async function getStaticPaths() {
   const posts = (await getCollection('articles')).filter((p)=>!p.data.draft);
   return posts.map((p)=>({ params:{ slug:p.id }, props:{ post:p } }));

@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+
+// Shown when the middleware gates an unpublished page. Returns 404 so search
+// engines don't index a placeholder, and the page itself is noindex.
+Astro.response.status = 404;
+---
+<Base title="Coming soon" noindex={true}>
+  <section class="cs">
+    <div class="wrap cs-inner">
+      <p class="eyebrow">Coming soon</p>
+      <h1>This page is on the way.</h1>
+      <p class="lede">
+        We're still putting this one together. Join <em>Humane Resources</em> and you'll
+        be the first to know when it — and the rest of the channel — goes live.
+      </p>
+      <div class="cs-form">
+        <NewsletterForm />
+      </div>
+      <p class="cs-back"><a href="/">← Back to home</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cs { padding-block: clamp(4rem, 12vw, 8rem); }
+  .cs-inner { max-width: 640px; text-align: center; margin-inline: auto; }
+  .cs h1 { font-size: var(--step-3); margin-bottom: 1rem; }
+  .cs .lede { margin-inline: auto; }
+  .cs-form { margin: 2rem 0 1.5rem; }
+  .cs-back { font-size: 0.95rem; }
+</style>

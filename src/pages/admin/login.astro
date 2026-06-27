@@ -1,0 +1,61 @@
+---
+import Admin from '../../layouts/Admin.astro';
+import { checkPassword, isConfigured, isAuthed, setSession } from '../../lib/auth.js';
+
+// Already signed in? Go straight to the dashboard.
+if (isAuthed(Astro)) return Astro.redirect('/admin/');
+
+let error = '';
+const configured = isConfigured();
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const password = form.get('password');
+  if (checkPassword(password)) {
+    setSession(Astro);
+    return Astro.redirect('/admin/');
+  }
+  error = 'Incorrect password.';
+}
+---
+<Admin title="Sign in">
+  <div class="login-card">
+    <p class="eyebrow">Admin</p>
+    <h1>Sign in</h1>
+
+    {!configured && (
+      <p class="warn">
+        No admin password is set. Add an <code>ADMIN_PASSWORD</code> environment
+        variable to your Railway service (and a local <code>.env</code> for dev),
+        then reload.
+      </p>
+    )}
+
+    {error && <p class="err">{error}</p>}
+
+    <form method="POST" autocomplete="off">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" required autofocus
+        disabled={!configured} />
+      <button type="submit" class="btn btn-primary" disabled={!configured}>Sign in</button>
+    </form>
+
+    <p class="back"><a href="/">← Back to site</a></p>
+  </div>
+</Admin>
+
+<style>
+  .login-card { max-width: 380px; margin-inline: auto; }
+  h1 { font-size: var(--step-2); margin-bottom: 1.5rem; }
+  label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 0.4rem; }
+  input {
+    width: 100%; padding: 0.7rem 0.85rem; font-size: 1rem; font-family: var(--body);
+    border: 1px solid var(--cream-line); border-radius: var(--radius);
+    background: var(--paper-pure); margin-bottom: 1.2rem;
+  }
+  input:focus { outline: 2px solid var(--brass); outline-offset: 1px; }
+  button { width: 100%; }
+  .err { color: #a3271f; background: #f7e7e5; border: 1px solid #e6c5c1; padding: 0.6rem 0.8rem; border-radius: var(--radius); font-size: 0.9rem; }
+  .warn { background: color-mix(in srgb, var(--brass) 14%, transparent); border-left: 3px solid var(--brass); padding: 0.8rem 1rem; border-radius: var(--radius); font-size: 0.9rem; }
+  .back { margin-top: 1.5rem; font-size: 0.9rem; }
+</style>

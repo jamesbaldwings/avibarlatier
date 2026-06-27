@@ -1,0 +1,51 @@
+---
+// Newsletter signup via beehiiv's hosted embed form.
+//
+// Set `beehiivEmbedUrl` in src/data/site.js to the embed URL from your beehiiv
+// dashboard (Settings → Subscribe Forms → Embed → the src of the <iframe>,
+// e.g. https://embeds.beehiiv.com/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).
+// Until that's set, this falls back to a button linking to the publication.
+import { links } from '../data/site.js';
+
+const { height = 320, dark = false } = Astro.props;
+const embed = links.beehiivEmbedUrl;
+---
+{embed ? (
+  <div class:list={['nl-embed', { dark }]}>
+    <iframe
+      src={embed}
+      title="Subscribe to the Humane Resources newsletter"
+      data-test-id="beehiiv-embed"
+      width="100%"
+      height={height}
+      frameborder="0"
+      scrolling="no"
+      loading="lazy"
+    ></iframe>
+  </div>
+) : (
+  <a href={links.newsletter} class="btn btn-primary" target="_blank" rel="noopener">
+    Join the newsletter
+  </a>
+)}
+
+<style>
+  .nl-embed {
+    max-width: 520px;
+    margin-inline: auto;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .nl-embed iframe {
+    display: block;
+    width: 100%;
+    margin: 0;
+    background: transparent;
+  }
+  /* On the dark CTA band, give the embed a light card so the form is legible. */
+  .nl-embed.dark {
+    background: var(--paper-pure);
+    border: 1px solid var(--cream-line);
+    padding: 0.5rem;
+  }
+</style>
