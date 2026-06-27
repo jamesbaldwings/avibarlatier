@@ -51,7 +51,9 @@ export function setSession(context) {
   context.cookies.set(COOKIE_NAME, sessionToken(), {
     httpOnly: true,
     sameSite: 'lax',
-    secure: context.url.protocol === 'https:',
+    // Use the build mode, not the request protocol: behind Railway's proxy the
+    // server sees http:// internally even though the browser is on https://.
+    secure: import.meta.env.PROD,
     path: '/',
     maxAge: 60 * 60 * 24 * 30, // 30 days
   });
