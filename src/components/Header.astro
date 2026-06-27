@@ -8,7 +8,7 @@ const visibleNav = nav.filter((item) => isPublished(item.href));
 <header class="hdr">
   <div class="wrap hdr-inner">
     <a href="/" class="brand" aria-label="Avi Barlatier — home">
-      <span class="brand-mark">AB</span>
+      <img src="/img/site-logo.png" alt="" class="brand-mark" width="36" height="36" loading="eager" />
       <span class="brand-name">Avi&nbsp;Barlatier</span>
     </a>
 
@@ -44,10 +44,8 @@ const visibleNav = nav.filter((item) => isPublished(item.href));
   .hdr-inner { display: flex; align-items: center; justify-content: space-between; min-height: 68px; }
   .brand { display: inline-flex; align-items: center; gap: 0.65rem; text-decoration: none; color: var(--ink); }
   .brand-mark {
-    font-family: var(--display); font-weight: 700; font-size: 0.95rem;
-    background: var(--ink); color: var(--paper);
-    width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: 3px;
-    letter-spacing: -0.03em;
+    width: 2.2rem; height: 2.2rem; border-radius: 50%; object-fit: cover;
+    border: 1.5px solid var(--cream-line); background: var(--ink);
   }
   .brand-name { font-family: var(--display); font-weight: 600; font-size: 1.15rem; letter-spacing: -0.01em; }
 
